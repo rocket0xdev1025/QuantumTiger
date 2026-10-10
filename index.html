@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#050816" />
+  <title>Quantum Tiger ($QT)</title>
+  <meta name="description" content="Quantum Tiger harnesses quantum power to break reality, defy limits, and dominate the Robinhood universe!" />
+  <meta property="og:title" content="Quantum Tiger ($QT)" />
+  <meta property="og:description" content="Quantum Tiger harnesses quantum power to break reality, defy limits, and dominate the Robinhood universe!" />
+  <meta property="og:image" content="banner.jpg" />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@500;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: "#050816",
+            plasma: "#67e8f9",
+            nebula: "#c084fc",
+            nucleus: "#fcd34d",
+          },
+          fontFamily: {
+            display: ["Orbitron", "sans-serif"],
+            sans: ["Outfit", "sans-serif"],
+            mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      font-family: Outfit, sans-serif;
+      background: #050816;
+    }
+    h1, h2, h3, .font-display { font-family: Orbitron, sans-serif; }
+    ::selection { background: #67e8f9; color: #050816; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #050816; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(#67e8f9, #7c3aed);
+      border-radius: 999px;
+    }
+    .quantum-text {
+      background: linear-gradient(100deg, #f8fafc 0%, #67e8f9 32%, #c084fc 68%, #fcd34d 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 18px rgba(103, 232, 249, 0.28));
+    }
+    .shade {
+      background:
+        radial-gradient(ellipse at 70% 18%, rgba(34, 211, 238, 0.16), transparent 42%),
+        radial-gradient(ellipse at 18% 70%, rgba(168, 85, 247, 0.18), transparent 46%),
+        linear-gradient(180deg, rgba(5, 8, 22, 0.42) 0%, rgba(5, 8, 22, 0.68) 34%, rgba(5, 8, 22, 0.84) 68%, rgba(4, 6, 16, 0.94) 100%);
+    }
+    .q-card {
+      background:
+        linear-gradient(180deg, rgba(8, 16, 40, 0.78), rgba(5, 8, 22, 0.66)),
+        repeating-linear-gradient(-16deg, transparent, transparent 11px, rgba(103, 232, 249, 0.045) 11px, rgba(103, 232, 249, 0.045) 16px);
+      border: 1px solid rgba(103, 232, 249, 0.28);
+      box-shadow: inset 3px 0 0 #fcd34d, 0 18px 50px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(16px);
+    }
+    .buy-btn {
+      background: linear-gradient(110deg, #67e8f9 0%, #60a5fa 38%, #a78bfa 72%, #fcd34d 130%);
+      color: #07111f;
+      font-family: Orbitron, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 0 24px rgba(103, 232, 249, 0.4), 0 0 42px rgba(167, 139, 250, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .buy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(252, 211, 77, 0.45), 0 0 54px rgba(103, 232, 249, 0.38);
+    }
+    .ghost-btn {
+      font-family: Orbitron, sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(252, 211, 77, 0.7);
+      color: #fcd34d;
+      background: rgba(5, 8, 22, 0.45);
+      box-shadow: inset 0 0 18px rgba(252, 211, 77, 0.08);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(252, 211, 77, 0.12);
+      box-shadow: 0 0 24px rgba(252, 211, 77, 0.25);
+    }
+    .shell {
+      perspective: 900px;
+    }
+    .ring {
+      position: absolute;
+      inset: 2%;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(103, 232, 249, 0.75);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    }
+    .ring::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      border-radius: 9999px;
+      background: #fef9c3;
+      box-shadow: 0 0 12px #fcd34d, 0 0 22px #67e8f9;
+    }
+    .ring-a { animation: orbit 14s linear infinite; }
+    .ring-b {
+      inset: 8%;
+      border-color: rgba(192, 132, 252, 0.8);
+      animation: orbit 20s linear infinite reverse;
+    }
+    .ring-c {
+      inset: 15%;
+      border-color: rgba(252, 211, 77, 0.75);
+      animation: orbit 11s linear infinite;
+    }
+    @keyframes orbit {
+      from { transform: rotateX(74deg) rotateZ(0deg); }
+      to { transform: rotateX(74deg) rotateZ(360deg); }
+    }
+    .ticker { animation: ticker 36s linear infinite; }
+    .ticker:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .scan {
+      position: relative;
+      overflow: hidden;
+    }
+    .scan::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(103, 232, 249, 0.85), transparent);
+      animation: scan 6.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes scan {
+      0% { top: 8%; opacity: 0; }
+      12% { opacity: 1; }
+      100% { top: 92%; opacity: 0; }
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #67e8f9;
+      outline-offset: 3px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .ticker, .ring, .scan::after, .buy-btn, .ghost-btn { animation: none; transition: none; }
+    }
+  </style>
+</head>
+<body class="text-slate-100 antialiased">
+  <a href="#content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-plasma focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:text-void">Skip to content</a>
+
+  <div class="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+    <img src="bg.jpg" alt="" class="h-full w-full object-cover object-center" />
+  </div>
+  <div class="shade pointer-events-none fixed inset-0 z-[1]" aria-hidden="true"></div>
+  <canvas id="stars" class="pointer-events-none fixed inset-0 z-[2]" aria-hidden="true"></canvas>
+
+  <div class="relative z-10">
+    <header class="sticky top-0 z-40 border-b border-cyan-300/20 bg-[#050816]/75 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
+        <a href="#top" class="flex items-center gap-3">
+          <img src="logo.png" alt="" width="600" height="600" class="h-11 w-11 rounded-full object-cover ring-2 ring-plasma/80 shadow-[0_0_18px_rgba(103,232,249,0.55)]" />
+          <span class="leading-tight">
+            <span class="block font-display text-sm tracking-wide text-white">Quantum Tiger</span>
+            <span class="block font-display text-[11px] tracking-[0.22em] text-nucleus">$QT</span>
+          </span>
+        </a>
+
+        <nav class="hidden items-center gap-6 text-sm text-cyan-50/80 md:flex" aria-label="Primary">
+          <a href="#narrative" class="transition hover:text-plasma">Narrative</a>
+          <a href="#how-to-buy" class="transition hover:text-plasma">How to Buy</a>
+          <a href="#chart" class="transition hover:text-plasma">Chart</a>
+        </nav>
+
+        <div class="hidden items-center gap-3 md:flex">
+          <a href="https://t.me/Quantum_Tiger" target="_blank" rel="noopener noreferrer" class="transition hover:scale-105" aria-label="Telegram">
+            <img src="tg.png" alt="" width="975" height="997" class="h-10 w-10 rounded-full object-cover ring-2 ring-white/10" />
+          </a>
+          <a href="https://x.com/Quantum_Tiger" target="_blank" rel="noopener noreferrer" class="transition hover:scale-105" aria-label="X">
+            <img src="x.png" alt="" width="554" height="554" class="h-10 w-10 rounded-full object-cover ring-2 ring-white/15" />
+          </a>
+          <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="buy-btn rounded-full px-5 py-2.5 text-xs">Buy Now</a>
+        </div>
+
+        <button id="menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-300/30 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+          <span class="flex w-5 flex-col gap-1.5" aria-hidden="true">
+            <span class="h-0.5 w-full bg-plasma"></span>
+            <span class="h-0.5 w-4 bg-nucleus"></span>
+            <span class="h-0.5 w-full bg-nebula"></span>
+          </span>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden border-t border-cyan-300/15 bg-[#050816]/95 px-4 py-4 md:hidden">
+        <nav class="flex flex-col gap-3 font-display text-sm tracking-wide" aria-label="Mobile">
+          <a href="#narrative" class="rounded-xl px-3 py-2 hover:bg-white/5">Narrative</a>
+          <a href="#how-to-buy" class="rounded-xl px-3 py-2 hover:bg-white/5">How to Buy</a>
+          <a href="#chart" class="rounded-xl px-3 py-2 hover:bg-white/5">Chart</a>
+        </nav>
+        <div class="mt-4 flex items-center gap-3">
+          <a href="https://t.me/Quantum_Tiger" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+            <img src="tg.png" alt="" width="975" height="997" class="h-10 w-10 rounded-full object-cover" />
+          </a>
+          <a href="https://x.com/Quantum_Tiger" target="_blank" rel="noopener noreferrer" aria-label="X">
+            <img src="x.png" alt="" width="554" height="554" class="h-10 w-10 rounded-full object-cover" />
+          </a>
+          <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="buy-btn ml-auto rounded-full px-5 py-2.5 text-xs">Buy Now</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <section id="top" class="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-16 pt-12 md:px-6 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:pt-20">
+        <div>
+          <p class="font-display text-xs tracking-[0.38em] text-nucleus">ROBINHOOD UNIVERSE</p>
+          <h1 class="quantum-text mt-4 text-5xl font-black leading-[0.95] sm:text-6xl lg:text-7xl">QUANTUM<br />TIGER</h1>
+          <div class="mt-5 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-black/35 px-3 py-1.5 backdrop-blur">
+            <span class="h-2 w-2 rounded-full bg-nucleus shadow-[0_0_10px_#fcd34d]"></span>
+            <span class="font-display text-sm tracking-[0.28em] text-plasma">$QT</span>
+          </div>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-cyan-50 sm:text-xl">
+            Quantum Tiger harnesses quantum power to break reality, defy limits, and dominate the Robinhood universe!
+          </p>
+          <p class="mt-3 max-w-xl text-sm leading-relaxed text-cyan-100/70">
+            A star-forged white tiger. An atom burning over the brow. One symbol on Robinhood Chain, bought with Robinhood ETH.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="buy-btn rounded-full px-7 py-3.5 text-sm">Buy Now</a>
+            <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="ghost-btn rounded-full px-7 py-3.5 text-sm">Chart</a>
+          </div>
+
+          <div class="q-card mt-8 flex flex-col gap-3 rounded-2xl px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="min-w-0">
+              <p id="ca-label" class="font-display text-[10px] tracking-[0.32em] text-nucleus">CONTRACT ADDRESS</p>
+              <code id="contract" class="mt-1 block truncate font-mono text-lg text-plasma sm:text-xl">TBA</code>
+            </div>
+            <button type="button" data-copy-ca class="ghost-btn shrink-0 rounded-full px-5 py-2.5 text-xs" aria-describedby="ca-label">
+              <span data-copy-label>Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="shell relative mx-auto w-full max-w-[460px]">
+          <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+            <span class="ring ring-a"></span>
+            <span class="ring ring-b"></span>
+            <span class="ring ring-c"></span>
+          </div>
+          <div class="scan relative z-10 mx-auto w-[78%] overflow-hidden rounded-[2rem] shadow-[0_0_60px_rgba(34,211,238,0.35)] ring-1 ring-cyan-200/40">
+            <img src="logo.png" alt="Quantum Tiger logo, a cosmic white tiger crowned by a glowing atom" width="600" height="600" class="aspect-square w-full object-cover" />
+          </div>
+          <div class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <div class="overflow-hidden border-y border-cyan-300/25 bg-black/45 backdrop-blur-md" aria-hidden="true">
+        <div class="ticker flex w-max py-3">
+          <p class="flex gap-10 pr-10 font-display text-xs tracking-[0.28em] text-cyan-50">
+            <span>QUANTUM TIGER</span><span class="text-nucleus">◆</span>
+            <span>$QT</span><span class="text-nucleus">◆</span>
+            <span>BREAK REALITY</span><span class="text-nucleus">◆</span>
+            <span>DEFY LIMITS</span><span class="text-nucleus">◆</span>
+            <span>DOMINATE ROBINHOOD</span><span class="text-nucleus">◆</span>
+            <span>ROBINHOOD ETH</span><span class="text-nucleus">◆</span>
+          </p>
+          <p class="flex gap-10 pr-10 font-display text-xs tracking-[0.28em] text-cyan-50">
+            <span>QUANTUM TIGER</span><span class="text-nucleus">◆</span>
+            <span>$QT</span><span class="text-nucleus">◆</span>
+            <span>BREAK REALITY</span><span class="text-nucleus">◆</span>
+            <span>DEFY LIMITS</span><span class="text-nucleus">◆</span>
+            <span>DOMINATE ROBINHOOD</span><span class="text-nucleus">◆</span>
+            <span>ROBINHOOD ETH</span><span class="text-nucleus">◆</span>
+          </p>
+        </div>
+      </div>
+
+      <section id="narrative" class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+        <div class="reveal max-w-3xl">
+          <p class="font-display text-xs tracking-[0.38em] text-nucleus">FIELD RECORD</p>
+          <h2 class="quantum-text mt-3 text-3xl font-extrabold sm:text-5xl">The Quantum Narrative</h2>
+          <p class="mt-4 text-lg text-cyan-50/90">
+            Quantum Tiger harnesses quantum power to break reality, defy limits, and dominate the Robinhood universe!
+          </p>
+        </div>
+
+        <figure class="reveal mt-10 overflow-hidden rounded-[1.75rem] border border-cyan-300/30 shadow-[0_0_50px_rgba(34,211,238,0.18)]">
+          <img src="banner.jpg" alt="Quantum Tiger banner, the white tiger resting in a galaxy of blue and violet nebulae" width="2448" height="816" class="aspect-[3/1] w-full object-cover" />
+        </figure>
+
+        <div class="mt-8 grid gap-5 md:grid-cols-3">
+          <article class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-xs tracking-[0.28em] text-plasma">01</p>
+            <h3 class="mt-3 text-xl text-white">Break Reality</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">Quantum power is the claw mark on this chain. $QT does not walk the old path. It tears the map and steps through the rift.</p>
+          </article>
+          <article class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-xs tracking-[0.28em] text-nebula">02</p>
+            <h3 class="mt-3 text-xl text-white">Defy Limits</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">Ceilings are for quieter beasts. The tiger pushes past the edge of the known chart and keeps the atom spinning.</p>
+          </article>
+          <article class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-xs tracking-[0.28em] text-nucleus">03</p>
+            <h3 class="mt-3 text-xl text-white">Dominate Robinhood</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">One universe. One name. Robinhood ETH goes in, $QT comes out, and the chain learns who holds the stripes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="how-to-buy" class="relative mx-auto max-w-6xl px-4 py-8 pb-20 md:px-6">
+        <div class="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="font-display text-xs tracking-[0.38em] text-nucleus">ENTER THE RIFT</p>
+            <h2 class="quantum-text mt-3 text-3xl font-extrabold sm:text-5xl">How to Buy</h2>
+            <p class="mt-4 text-lg text-cyan-50/90">Four steps. Robinhood ETH in. $QT out. The tiger does not wait on another chain.</p>
+          </div>
+          <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="buy-btn w-fit rounded-full px-7 py-3.5 text-sm">Buy Now</a>
+        </div>
+
+        <ol class="mt-10 grid gap-5 lg:grid-cols-4">
+          <li class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-3xl text-plasma">01</p>
+            <h3 class="mt-4 text-lg text-white">Add Robinhood Chain</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">Open MetaMask, Robinhood Wallet, or any EVM wallet. Quantum Tiger lives on Robinhood Chain, so the wallet has to be on that network before the swap.</p>
+            <dl class="mt-4 space-y-2 font-mono text-[11px] leading-relaxed text-cyan-100/80">
+              <div><dt class="text-nucleus">Chain ID</dt><dd>4663</dd></div>
+              <div><dt class="text-nucleus">RPC</dt><dd class="break-all">https://rpc.mainnet.chain.robinhood.com</dd></div>
+              <div><dt class="text-nucleus">Explorer</dt><dd><a class="break-all text-plasma underline decoration-cyan-300/40 underline-offset-2" href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener noreferrer">robinhoodchain.blockscout.com</a></dd></div>
+            </dl>
+          </li>
+          <li class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-3xl text-nebula">02</p>
+            <h3 class="mt-4 text-lg text-white">Get Robinhood ETH</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">$QT is bought with ETH that already sits on Robinhood Chain. Bridge ETH over and keep a little extra for gas. The same Robinhood ETH pays for the swap and the network fee.</p>
+            <p class="mt-4 text-sm leading-relaxed text-cyan-50/80">The Arbitrum portal can send ETH to Robinhood Chain when you pick that network.</p>
+            <a class="mt-3 inline-block text-sm text-plasma underline decoration-cyan-300/40 underline-offset-2" href="https://portal.arbitrum.io" target="_blank" rel="noopener noreferrer">portal.arbitrum.io</a>
+          </li>
+          <li class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-3xl text-nucleus">03</p>
+            <h3 class="mt-4 text-lg text-white">Swap for $QT</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">Press Buy Now. Uniswap opens on Robinhood with $QT set as the token you receive. Connect the wallet, enter how much Robinhood ETH to spend, and read the quote before you sign.</p>
+            <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="buy-btn mt-5 inline-flex rounded-full px-5 py-2.5 text-xs">Buy Now</a>
+          </li>
+          <li class="q-card reveal rounded-3xl p-6">
+            <p class="font-display text-3xl text-plasma">04</p>
+            <h3 class="mt-4 text-lg text-white">Confirm the Roar</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cyan-50/80">Approve the swap in your wallet. When it confirms, $QT is yours. If the token stays hidden, copy the contract on this page and import it. Then open the chart and watch the stripes run.</p>
+            <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="ghost-btn mt-5 inline-flex rounded-full px-5 py-2.5 text-xs">Chart</a>
+          </li>
+        </ol>
+      </section>
+
+      <section id="chart" class="mx-auto max-w-6xl px-4 py-8 pb-20 md:px-6">
+        <div class="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="font-display text-xs tracking-[0.38em] text-nucleus">TRACK THE HUNT</p>
+            <h2 class="quantum-text mt-3 text-3xl font-extrabold sm:text-5xl">Chart</h2>
+            <p class="mt-4 max-w-xl text-cyan-50/85">The $QT pair on Robinhood, embedded from Dexscreener. The tiger moves. The chart keeps the record.</p>
+          </div>
+          <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="ghost-btn w-fit rounded-full px-7 py-3.5 text-sm">Chart</a>
+        </div>
+
+        <div class="q-card reveal mt-8 flex flex-col gap-3 rounded-2xl px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div class="min-w-0">
+            <p class="font-display text-[10px] tracking-[0.32em] text-nucleus">CA</p>
+            <code data-ca class="mt-1 block truncate font-mono text-lg text-plasma">TBA</code>
+          </div>
+          <button type="button" data-copy-ca class="ghost-btn shrink-0 rounded-full px-5 py-2.5 text-xs">
+            <span data-copy-label>Copy</span>
+          </button>
+        </div>
+
+        <div class="reveal mt-5 overflow-hidden rounded-[1.75rem] border border-cyan-300/30 bg-[#050816] shadow-[0_0_50px_rgba(124,58,237,0.2)]">
+          <iframe
+            title="Quantum Tiger Dexscreener chart"
+            src="https://dexscreener.com/robinhood/TBA?embed=1&loadChartSettings=0&trades=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=1&chartType=usd&interval=15"
+            class="h-[440px] w-full md:h-[560px]"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-6xl px-4 pb-20 md:px-6">
+        <div class="q-card reveal relative overflow-hidden rounded-[2rem] px-6 py-12 text-center md:px-12">
+          <p class="font-display text-xs tracking-[0.38em] text-nucleus">$QT</p>
+          <h2 class="quantum-text mx-auto mt-4 max-w-4xl text-3xl font-extrabold leading-tight sm:text-5xl">Dominate the Robinhood universe</h2>
+          <p class="mx-auto mt-5 max-w-2xl text-lg text-cyan-50/90">Quantum Tiger harnesses quantum power to break reality, defy limits, and dominate the Robinhood universe!</p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="buy-btn rounded-full px-7 py-3.5 text-sm">Buy Now</a>
+            <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="ghost-btn rounded-full px-7 py-3.5 text-sm">Chart</a>
+          </div>
+          <div class="mt-8 flex items-center justify-center gap-4">
+            <a href="https://t.me/Quantum_Tiger" target="_blank" rel="noopener noreferrer" class="transition hover:scale-105" aria-label="Telegram">
+              <img src="tg.png" alt="" width="975" height="997" class="h-12 w-12 rounded-full object-cover ring-2 ring-cyan-200/30" />
+            </a>
+            <a href="https://x.com/Quantum_Tiger" target="_blank" rel="noopener noreferrer" class="transition hover:scale-105" aria-label="X">
+              <img src="x.png" alt="" width="554" height="554" class="h-12 w-12 rounded-full object-cover ring-2 ring-white/20" />
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-cyan-300/20 bg-black/50 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:flex-row md:items-center md:justify-between md:px-6">
+        <div class="flex items-center gap-3">
+          <img src="logo.png" alt="" width="600" height="600" class="h-12 w-12 rounded-full object-cover ring-2 ring-plasma/60" />
+          <div>
+            <p class="font-display text-sm">Quantum Tiger</p>
+            <p class="font-display text-xs tracking-[0.22em] text-nucleus">$QT</p>
+          </div>
+        </div>
+        <p class="max-w-xl text-xs leading-relaxed text-cyan-100/60">$QT is a meme token on Robinhood Chain. Tokens can go to zero. Nothing on this page is financial advice. Copy the contract published here and confirm it before you swap.</p>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite" class="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-6 rounded-full bg-plasma px-5 py-2.5 font-display text-xs tracking-widest text-void opacity-0 transition duration-300"></div>
+
+  <script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuToggle.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("hidden") === false;
+      menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open menu");
+      });
+    });
+
+    const contract = document.getElementById("contract").textContent.trim();
+    document.querySelectorAll("[data-ca]").forEach((node) => {
+      node.textContent = contract;
+    });
+
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.remove("translate-y-6", "opacity-0");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add("translate-y-6", "opacity-0");
+      }, 1800);
+    }
+
+    async function copyContract(event) {
+      const button = event.currentTarget;
+      const label = button.querySelector("[data-copy-label]");
+      try {
+        await navigator.clipboard.writeText(contract);
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = contract;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.select();
+        const ok = document.execCommand("copy");
+        area.remove();
+        if (!ok) {
+          showToast("Select TBA and copy it");
+          return;
+        }
+      }
+      if (label) {
+        const previous = label.textContent;
+        label.textContent = "Copied";
+        setTimeout(() => {
+          label.textContent = previous;
+        }, 1600);
+      }
+      showToast("Contract copied");
+    }
+    document.querySelectorAll("[data-copy-ca]").forEach((button) => {
+      button.addEventListener("click", copyContract);
+    });
+
+    const revealNodes = document.querySelectorAll(".reveal");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealNodes.forEach((node) => node.classList.add("in"));
+    } else if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16 });
+      revealNodes.forEach((node) => observer.observe(node));
+    } else {
+      revealNodes.forEach((node) => node.classList.add("in"));
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const palette = ["255,255,255", "103,232,249", "252,211,77", "192,132,252"];
+    let stars = [];
+    let running = !reduceMotion;
+
+    function layoutStars() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.min(120, Math.floor(window.innerWidth / 12));
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.3 + 0.3,
+        a: Math.random(),
+        s: Math.random() * 0.012 + 0.003,
+        c: palette[Math.floor(Math.random() * palette.length)],
+      }));
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      stars.forEach((star) => {
+        if (!reduceMotion) {
+          star.a += star.s;
+        }
+        const alpha = reduceMotion ? 0.7 : 0.35 + Math.abs(Math.sin(star.a)) * 0.65;
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(" + star.c + "," + alpha + ")";
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function loop() {
+      if (!running) return;
+      drawStars();
+      requestAnimationFrame(loop);
+    }
+
+    layoutStars();
+    if (reduceMotion) {
+      drawStars();
+    } else {
+      loop();
+    }
+    window.addEventListener("resize", () => {
+      layoutStars();
+      if (reduceMotion) drawStars();
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (reduceMotion) return;
+      running = !document.hidden;
+      if (running) loop();
+    });
+  </script>
+</body>
+</html>
